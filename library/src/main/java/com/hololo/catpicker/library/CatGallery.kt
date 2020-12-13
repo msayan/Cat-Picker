@@ -2,6 +2,7 @@ package com.hololo.catpicker.library
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Resources
 import android.net.Uri
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
@@ -128,7 +129,11 @@ class CatGallery private constructor(
 
             return CatGallery(
                 activity!!,
-                if (titleRes != -1) activity?.getString(titleRes) else title,
+                if (titleRes != -1) try {
+                    activity?.getString(titleRes)
+                } catch (ex: Resources.NotFoundException) {
+                    ""
+                } else title,
                 backIconDrawable,
                 toolbarColor,
                 listener

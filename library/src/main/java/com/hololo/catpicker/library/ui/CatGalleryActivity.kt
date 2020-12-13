@@ -2,6 +2,7 @@ package com.hololo.catpicker.library.ui
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -79,28 +80,30 @@ class CatGalleryActivity : AppCompatActivity() {
         val title = intent.getStringExtra(Constants.IntentName.TITLE)
 
         if (toolbarColor != -1) {
-            supportActionBar?.setBackgroundDrawable(
-                ColorDrawable(
-                    ContextCompat.getColor(
-                        this,
-                        toolbarColor
-                    )
-                )
-            )
-
-            window.statusBarColor = makeColorDarker(
+            val colorRes = try {
                 ContextCompat.getColor(
                     this,
                     toolbarColor
                 )
-            )
+            } catch (ex: Resources.NotFoundException) {
+                ex.printStackTrace()
+                null
+            }
+            colorRes?.let {
+                supportActionBar?.setBackgroundDrawable(ColorDrawable(colorRes))
+                window.statusBarColor = makeColorDarker(colorRes)
+            }
         }
 
-        supportActionBar?.title = title
+        supportActionBar?.title = if (title.isNullOrBlank()) getString(R.string.title) else title
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         if (backIcon != -1) {
-            supportActionBar?.setHomeAsUpIndicator(backIcon)
+            try {
+                supportActionBar?.setHomeAsUpIndicator(backIcon)
+            } catch (ex: Resources.NotFoundException) {
+                ex.printStackTrace()
+            }
         }
     }
 
