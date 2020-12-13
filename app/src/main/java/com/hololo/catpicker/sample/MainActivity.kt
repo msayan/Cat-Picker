@@ -21,9 +21,9 @@ class MainActivity : AppCompatActivity() {
 
         gallery =
             CatGallery.Builder().setActivity(this)
-                .setTitle(123)
-                .setToolbarColor(123)
-                .setBackIconDrawable(123)
+                .setTitle("Pick one!")
+                .setToolbarColor(R.color.purple_500)
+                .setBackIconDrawable(R.drawable.ic_baseline_chevron_left)
                 .setImageListener {
                     imageView.setImageURI(it)
                 }
