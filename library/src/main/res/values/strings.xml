@@ -1,0 +1,4 @@
+<resources>
+    <string name="retry">Retry</string>
+    <string name="connection_error">We need an active connection to show cat images</string>
+</resources>
